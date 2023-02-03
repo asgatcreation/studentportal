@@ -7,11 +7,11 @@
     <div class="row">
         {% for  note in notes %}
         <div class="col-md-3">
-            <a href="#">
+            <a href="{% url 'dashboard:notesdetail' note.id %}">
                 <div class="card">
                     <div class="card-header">{{note.title}}</div>
                     <div class="card-body">{{note.description|slice:"0:101" }}</div>
-                    <div class="card-footer mt-auto "><a href="#">
+                    <div class="card-footer mt-auto "><a href="{% url 'dashboard:delnote' note.id %}">
                         <i class="fa fa-trash fa-2x"></i></a>
                     </div>
                 </div>
