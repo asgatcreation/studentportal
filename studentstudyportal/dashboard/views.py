@@ -40,6 +40,29 @@ class NotesDetailView(generic.DetailView):
 ####HOME WORK
 
 def homework(request):
+    if request.method == 'POST':
+        form = HomeworkForm(request.POST)
+        if form.is_valid():
+            try:
+                finished = request.POST['is_finished']
+                if finished == 'on':
+                    finished = True
+                else:
+                    finished = False
+            except:
+                finished = False
+            homeworks = Homework(
+                user = request.user,
+                subject = request.POST['subject'],
+                title = request.POST['title'],
+                description = request.POST['description'],
+                due = request.POST['due'],
+                is_finished = finished   
+            )
+            homeworks.save()
+            messages.success(request, f"Homework added from {request.user.username}!!")
+    else:
+        form = HomeworkForm
     homework=Homework.objects.filter(user=request.user)
     if len(homework) == 0:
         homework_done = True
@@ -47,6 +70,18 @@ def homework(request):
         homework_done = False
     context = {
         'homeworks':homework,
-        'homeworks_done':homework_done
+        'homeworks_done':homework_done,
+        'form':form
     }
     return render(request, 'dashboard/homework.html', context)
+
+
+def update_homework(request, pk=None):
+    homework = Homework.objects.get(id=pk)
+    if homework.is_finished == True:
+        homework.is_finished = False
+    else:
+        homework.is_finished=True
+    homework.save()
+    return redirect("dashboard:homework")
+    
