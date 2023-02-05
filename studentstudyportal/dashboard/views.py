@@ -84,4 +84,16 @@ def update_homework(request, pk=None):
         homework.is_finished=True
     homework.save()
     return redirect("dashboard:homework")
+
+def delete_homework(request, pk=None):
+    Homework.objects.get(id=pk).delete()
+    return redirect("dashboard:homework")
     
+#########YOUTUBE
+
+def youtube(request):
+    form = DashbordForm()
+    context = {
+        'form':form
+    }
+    return render(request, "dashboard/youtube.html", context)

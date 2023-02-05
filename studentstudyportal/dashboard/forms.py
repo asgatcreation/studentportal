@@ -15,4 +15,8 @@ class HomeworkForm(forms.ModelForm):
         model = Homework
         widgets = {'due':DateInput()}
         fields = ['subject','title','description','due','is_finished']
-        
+
+
+####youtube
+class DashbordForm(forms.Form):
+    text = forms.CharField(max_length=100, label="please enter your video search")
