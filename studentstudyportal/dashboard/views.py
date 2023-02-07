@@ -103,23 +103,21 @@ def youtube(request ):
                 'input':text,
                 'title':i['title'],
                 'duration':i['duration'],
-                'thumbnail':i['thumbnail'][0]['url'],
+                'thumbnail':i['thumbnails'][0]['url'],
                 'channel':i['channel']['name'],
                 'link':i['link'],
                 'views':i['viewcount']['short'],
                 'published':i['publishedTime'],
-
-               
-               
-                
+ 
                
                 
             }
             desc=''
-            if i[descriptionSnippet]:
+            if i['descriptionSnippet']:
                 for j in i['descriptionSnippet']:
                     desc += j['text']
-                result_dict['description']
+            result_dict['description']
+            result_list.append(result_dict)
                     
         
     else:
