@@ -106,7 +106,7 @@ def youtube(request ):
                 'thumbnail':i['thumbnails'][0]['url'],
                 'channel':i['channel']['name'],
                 'link':i['link'],
-                'views':i['viewcount']['short'],
+                'views':i['viewCount']['short'],
                 'published':i['publishedTime'],
  
                
@@ -116,10 +116,13 @@ def youtube(request ):
             if i['descriptionSnippet']:
                 for j in i['descriptionSnippet']:
                     desc += j['text']
-            result_dict['description']
+            result_dict['description'] = desc
             result_list.append(result_dict)
-                    
-        
+            context={
+                'form':form,
+                'results':result_list
+            }
+        return render(request, "dashboard/youtube.html", context) 
     else:
         form = DashbordForm()
     context = {
