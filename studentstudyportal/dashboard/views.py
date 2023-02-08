@@ -129,3 +129,12 @@ def youtube(request ):
         'form':form
     }
     return render(request, "dashboard/youtube.html", context)
+
+
+#######TO DO
+def todo(request):
+    todo = Todo.objects.filter(user=request.user)
+    context = {
+        'todos': todo
+    }
+    return render(request, "dashboard/todo.html", context)
