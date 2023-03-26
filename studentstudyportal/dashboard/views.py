@@ -3,7 +3,7 @@ from . forms import *
 from django.contrib import messages
 from django.views import generic
 from youtubesearchpython import VideosSearch
-
+import requests
 
 # Create your views here.
 # 19:58
@@ -177,3 +177,50 @@ def update_todo(request, pk=None):
 def delete_todo(request, pk=None):
     Todo.objects.get(id=pk).delete()
     return redirect("dashboard:todo")
+
+
+###### BOOOOOOOOOOOOOOOOOOOKS
+# def books(request):
+#     return render(request, "dashboard/books.html")
+
+def books(request ):
+    if request.method == "POST":
+        form = DashbordForm(request.POST)
+        text = request.POST['text']
+        url = "https://www.googleapi.com/books/v1/volumns?q="+text
+        r = requests.get(url)
+        answer = r.json()
+        result_list = []
+        for i in video.result()['result']:
+            result_dict = {
+                'input':text,
+                'title':i['title'],
+                'duration':i['duration'],
+                'thumbnail':i['thumbnails'][0]['url'],
+                'channel':i['channel']['name'],
+                'link':i['link'],
+                'views':i['viewCount']['short'],
+                'published':i['publishedTime'],
+ 
+               
+                
+            }
+            desc=''
+            if i['descriptionSnippet']:
+                for j in i['descriptionSnippet']:
+                    desc += j['text']
+            result_dict['description'] = desc
+            result_list.append(result_dict)
+            context={
+                'form':form,
+                'results':result_list
+            }
+        return render(request, "dashboard/youtube.html", context) 
+    else:
+        form = DashbordForm()
+    context = {
+        'form':form
+    }
+    return render(request, "dashboard/youtube.html", context)
+    
+    
