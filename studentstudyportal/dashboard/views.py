@@ -183,44 +183,36 @@ def delete_todo(request, pk=None):
 # def books(request):
 #     return render(request, "dashboard/books.html")
 
-def books(request ):
+def books(request):
     if request.method == "POST":
         form = DashbordForm(request.POST)
         text = request.POST['text']
-        url = "https://www.googleapi.com/books/v1/volumns?q="+text
+        url = "https://www.googleapis.com/books/v1/volumes?q="+text
         r = requests.get(url)
         answer = r.json()
         result_list = []
-        for i in video.result()['result']:
+        for i in range(10):
             result_dict = {
-                'input':text,
-                'title':i['title'],
-                'duration':i['duration'],
-                'thumbnail':i['thumbnails'][0]['url'],
-                'channel':i['channel']['name'],
-                'link':i['link'],
-                'views':i['viewCount']['short'],
-                'published':i['publishedTime'],
- 
-               
-                
+                'title':answer['items'][i]['volumeInfo']['title'],
+                'subtitle':answer['items'][i]['volumeInfo'].get('subtitle'),
+                'description':answer['items'][i]['volumeInfo'].get('description'),
+                'count':answer['items'][i]['volumeInfo'].get('pageCount'),
+                'categories':answer['items'][i]['volumeInfo'].get('categories'),
+                'rating':answer['items'][i]['volumeInfo'].get('pageRating'),
+                'thumbnail':answer['items'][i]['volumeInfo'].get('imageLinks').get('thumbnail'),
+                'preview':answer['items'][i]['volumeInfo'].get('previewLinks')
             }
-            desc=''
-            if i['descriptionSnippet']:
-                for j in i['descriptionSnippet']:
-                    desc += j['text']
-            result_dict['description'] = desc
             result_list.append(result_dict)
             context={
                 'form':form,
                 'results':result_list
             }
-        return render(request, "dashboard/youtube.html", context) 
+        return render(request, "dashboard/books.html", context) 
     else:
         form = DashbordForm()
     context = {
         'form':form
     }
-    return render(request, "dashboard/youtube.html", context)
+    return render(request, "dashboard/books.html", context)
     
     
