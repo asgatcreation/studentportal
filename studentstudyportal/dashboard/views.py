@@ -214,5 +214,14 @@ def books(request):
         'form':form
     }
     return render(request, "dashboard/books.html", context)
+
     
-    
+def dictionary(request):
+    return render(request, "dashboard/dictionary.html")
+
+
+def wikipedia(request):
+    return render(request, "dashboard/wiki.html")
+
+def conversion(request):
+    return render(request, "dashboard/conversion.html")
