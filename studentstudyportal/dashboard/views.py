@@ -217,11 +217,24 @@ def books(request):
 
     
 def dictionary(request):
-    return render(request, "dashboard/dictionary.html")
+    form = DashbordForm()
+    context = {
+        'form':form
+    }  
+    return render(request, "dashboard/dictionary.html", context)
 
 
 def wikipedia(request):
+    form = DashbordForm()
+    context = {
+        'form':form
+    }
     return render(request, "dashboard/wiki.html")
 
+
 def conversion(request):
+    form = DashbordForm()
+    context = {
+        'form':form
+    }
     return render(request, "dashboard/conversion.html")
