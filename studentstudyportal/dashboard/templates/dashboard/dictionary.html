@@ -27,7 +27,7 @@
             <h4>Example: {{example}}</h4>
         </p>
         Synonyms:
-        {% for synonym in Synonyms %}
+        {% for synonym in synonyms %}
             {{synonym}}
         {% endfor %}
         <hr>
@@ -35,6 +35,6 @@
     </div>
     {% else %}
     <h2>Sorry, API request limit exceeded</h2>
-    {% endif %}
+{% endif %}
 </section>
 {% endblock content %}
